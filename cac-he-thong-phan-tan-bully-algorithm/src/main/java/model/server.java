@@ -405,6 +405,7 @@ public class server {
                                         tpSettext(textPane, getCurrentTime() + ":" + getId() + ": " + String.format("Vua nhan duoc %d dong tu id: %d", tmp.MoneyValue, tmp.SendId));
                                         tpSetMessage(tpChatbox, getCurrentTime() + ": Vừa nhận được tiền", 1);
                                         JOptionPane.showMessageDialog(mainFrame, String.format("Bạn vừa nhận được %s từ %s", tmp.MoneyValue, tmp.SendId));
+                                        connectService.recMoney(tmp.ReceiveId, Id, tmp.MoneyValue, tmp.Msg);
                                         tfMsg.setText(String.valueOf(connectService.getAccountMoney(Id)));
                                         return;
                                     }
@@ -616,9 +617,8 @@ public class server {
                             /*Nhận được response chuyển tiền thành công*/
                             tpSetMessage(tpChatbox, getCurrentTime() + ": Chuyển tiền thành công!", 1);
                             JOptionPane.showMessageDialog(mainFrame, "Chuyển tiền thành công!");
-                            tfMsg.setText(String.valueOf(connectService.getAccountMoney(Id)));
-                            System.out.println(list[3]);
                             connectService.sendMoney(Id,Integer.parseInt(list[1]), Integer.parseInt(list[2]), list[3]);
+                            tfMsg.setText(String.valueOf(connectService.getAccountMoney(Id)));
                             break;
                         case "receivemoney":
                             /*Nhận được response vừa nhận được tiền từ chỗ khác*/
