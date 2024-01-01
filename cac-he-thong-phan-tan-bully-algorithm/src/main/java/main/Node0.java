@@ -388,7 +388,7 @@ public class Node0 extends javax.swing.JFrame {
                         if (i.getId() == revId) {
                             Socket socket = new Socket(i.getHost(), i.getPort());
                             DataOutputStream writer = new DataOutputStream(socket.getOutputStream());
-                            writer.writeUTF(String.format("receivemoney-%d-%d", sv.getId(), money));
+                            writer.writeUTF(String.format("receivemoney-%d-%d-%s", sv.getId(), money,msg));
                             writer.close();
                             socket.close();
                         }

@@ -394,7 +394,7 @@ public class server {
                                 if (n.getId() == tmp.SendId) {
                                     Socket socket = new Socket(n.getHost(), n.getPort());
                                     DataOutputStream writer = new DataOutputStream(socket.getOutputStream());
-                                    writer.writeUTF(String.format("confirmtransfers-%d-%d", tmp.ReceiveId, tmp.MoneyValue));
+                                    writer.writeUTF(String.format("confirmtransfers-%d-%d-%s", tmp.ReceiveId, tmp.MoneyValue,tmp.Msg));
 //                                    writer.writeUTF("confirmtransfers");
                                     //tpSettext(textPane, getCurrentTime() + ":" + getId() + ": " + String.format("Da chuyen %d den %d", tmp.MoneyValue, tmp.ReceiveId));
                                     writer.close();
@@ -410,7 +410,7 @@ public class server {
                                     }
                                     Socket socket = new Socket(n.getHost(), n.getPort());
                                     DataOutputStream writer = new DataOutputStream(socket.getOutputStream());
-                                    writer.writeUTF(String.format("receivemoney-%d-%d", tmp.SendId, tmp.MoneyValue));
+                                    writer.writeUTF(String.format("receivemoney-%d-%d-%s", tmp.SendId, tmp.MoneyValue,tmp.Msg));
                                     tpSettext(textPane, getCurrentTime() + ":" + getId() + ": " + String.format("Da thong bao den %d", tmp.ReceiveId));
                                     writer.close();
                                     socket.close();
@@ -617,13 +617,14 @@ public class server {
                             tpSetMessage(tpChatbox, getCurrentTime() + ": Chuyển tiền thành công!", 1);
                             JOptionPane.showMessageDialog(mainFrame, "Chuyển tiền thành công!");
                             tfMsg.setText(String.valueOf(connectService.getAccountMoney(Id)));
-                            connectService.sendMoney(Id,Integer.parseInt(list[1]), Integer.parseInt(list[2]), "chuyển tiền");
+                            System.out.println(list[3]);
+                            connectService.sendMoney(Id,Integer.parseInt(list[1]), Integer.parseInt(list[2]), list[3]);
                             break;
                         case "receivemoney":
                             /*Nhận được response vừa nhận được tiền từ chỗ khác*/
                             tpSetMessage(tpChatbox, getCurrentTime() + ": Vừa nhận được tiền", 1);
                             tpSettext(textPane, getCurrentTime() + ":" + getId() + ": " + String.format("Vua nhan %s tu %s", list[2], list[1]));
-                            connectService.recMoney(Integer.parseInt(list[1]), Id, Integer.parseInt(list[2]), "nhận tiền");
+                            connectService.recMoney(Integer.parseInt(list[1]), Id, Integer.parseInt(list[2]), list[3]);
                             JOptionPane.showMessageDialog(mainFrame, String.format("Bạn vừa nhận được %s từ %s", list[2], list[1]));
                             tfMsg.setText(String.valueOf(connectService.getAccountMoney(Id)));
                             break;
